@@ -342,6 +342,36 @@
         .info-box strong {
             color: #856404;
         }
+
+        select.btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: all 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+        }
+        
+        select.btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        select.btn option {
+            background: white;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -591,12 +621,20 @@
         });
         
         // 샘플 이미지 로드
-        function loadSampleImage() {
-            const img = new Image();
-            img.onload = function() {
-                loadImage(img);
-            };
-            img.src = 'sample.jpg';
+        function loadSelectedSample() {
+            const select = document.getElementById('sampleSelect');
+            const selectedFile = select.value;
+            
+            if (selectedFile) {
+                const img = new Image();
+                img.onload = function() {
+                    loadImage(img);
+                };
+                img.onerror = function() {
+                    alert('이미지를 불러올 수 없습니다: ' + selectedFile);
+                };
+                img.src = selectedFile;
+            }
         }
         
         function loadImage(img) {
